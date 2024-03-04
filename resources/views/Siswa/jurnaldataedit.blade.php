@@ -41,7 +41,7 @@
 
 
     <link href="{{ asset('assets/css/siswa/jurnal.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet"> --}}
 
     <style>
         /* Ganti warna teks placeholder menjadi merah (contoh) */
@@ -146,7 +146,7 @@
                                         'TJKT' => 'Teknik Jaringan Komputer dan Telekomunikasi',
                                         'TK' => 'Teknik Ketenagalistrikan',
                                         'TM' => 'Teknik Mesin',
-                                        'TO' => 'Teknik Otomotif',
+                                        'TKRO' => 'Teknik Kendaraan Ringan dan Otomotif',
                                         'TPFL' => 'Teknik Pengelasan dan Fabrikasi Logam',
                                         default => '',
                                     }

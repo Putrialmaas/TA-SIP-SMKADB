@@ -9,18 +9,6 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/welcome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
-
-<body>
-
-    {{-- navigation bar --}}
-    <nav class="navbar fixed-top justify-content-between navbar-expand-lg">
-        <a href="/" style="text-decoration: none;">
-            <button type="button" class="d-flex btn btn-outline-light"><i
-                    class="fa-solid fa-chevron-left"></i></button>
-        </a>
-    </nav>
-
     <style>
         .bg-main {
             background-image: url("/assets/img/Bglogin.jpg");
@@ -30,7 +18,7 @@
         }
 
         .main {
-            position: fixed;
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -41,6 +29,7 @@
 
         .w-60 {
             background-color: white;
+            width: 50%;
         }
 
         .alert {
@@ -64,36 +53,43 @@
             --bs-btn-active-bg: #2A356C;
             --bs-btn-disabled-color: #2A356C;
             --bs-btn-disabled-border-color: #2A356C;
+        }
 
+        @media (max-width: 768px) {
+            .w-60 {
+                width: 60%; /* Adjust the width for smaller screens */
+            }
+
+            .w-60.w-md-75 {
+                width: 70%;
+            }
+
+            .w-60.w-lg-50 {
+                width: 70%;
+            }
+
+            .w-60.w-xl-25 {
+                width: 80%;
+            }
         }
     </style>
+</head>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const passwordInput = document.getElementById("password");
-            const passwordToggle = document.getElementById("password-toggle");
-            const eyeicon = document.getElementById("eye-icon");
+<body>
 
-            passwordToggle.addEventListener("click", function() {
-                if (passwordInput.type === "password") {
-                    passwordInput.type = "text";
-                    eyeicon.classList.remove("fa-eye-slash");
-                    eyeicon.classList.add("fa-eye");
-                } else {
-                    passwordInput.type = "password";
-                    eyeicon.classList.remove("fa-eye");
-                    eyeicon.classList.add("fa-eye-slash");
-                }
-            });
-        });
-    </script>
+    <nav class="navbar fixed-top justify-content-between navbar-expand-lg">
+        <a href="/" style="text-decoration: none;">
+            <button type="button" class="d-flex btn btn-outline-light"><i
+                    class="fa-solid fa-chevron-left"></i></button>
+        </a>
+    </nav>
 
     <div class="bg-main">
         <div class="main">
             <div class="container py-5">
-                <div class="w-60 center border rounded px-3 py-3 mx-auto" style="width: 50%;">
+                <div class="w-60  w-md-75 w-lg-50 w-xl-25 center border rounded px-3 py-3 mx-auto" >
                     <div class="login-head-logo py-3 text-center">
-                        <div style="margin-bottom: -3%;">
+                        <div style="margin-bottom: -2%;">
                             <img src="assets/img/logosmk.png" alt="logo" width="70" height="70">
                         </div>
                         <br>
@@ -138,19 +134,31 @@
                                 style="width: 200px; font-size: 15px;">Login</button>
                         </div>
                     </form>
-                    {{-- @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $item)
-                                    <li>{{ $item }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif --}}
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const passwordInput = document.getElementById("password");
+            const passwordToggle = document.getElementById("password-toggle");
+            const eyeicon = document.getElementById("eye-icon");
+
+            passwordToggle.addEventListener("click", function() {
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    eyeicon.classList.remove("fa-eye-slash");
+                    eyeicon.classList.add("fa-eye");
+                } else {
+                    passwordInput.type = "password";
+                    eyeicon.classList.remove("fa-eye");
+                    eyeicon.classList.add("fa-eye-slash");
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

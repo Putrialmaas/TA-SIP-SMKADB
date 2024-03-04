@@ -57,7 +57,7 @@
             <div class="sidebar" id="sidebar">
                 <a class="sidebar-brand" href="{{ route('admin.dashboard') }}">
                     <div class="sidebar-brand-icon" style="justify-content: center; display: flex;">
-                        <img src="{{ url('assets/img/logosmk.png') }}" id="sidebarBrandIcon" style="width: 90px;"
+                        <img src="{{ url('assets/img/logosmk.png') }}" id="sidebarBrandIcon" style="width: 50%;"
                             alt="Logo" />
                     </div>
                     <div class="sidebar-brand-text" id="sidebarBrandText">SMKN 1 Adiwerna</div>
@@ -93,7 +93,7 @@
                 <div id="collapseDokumen" class="collapse" aria-labelledby="headingDokumen"
                     data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.datasiswa') }}">Surat Monitoring</a>
+                        <a class="collapse-item" href="{{ route('guru.monitoring') }}">Surat Monitoring</a>
                         <a class="collapse-item" href="{{ route('guru.penarikan') }}">Surat Penarikan</a>
 
                     </div>
@@ -136,27 +136,15 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                    </form>
-
-                    <ul class="navbar-nav ml-auto">
-
-                        {{-- <div class="topbar-divider d-none d-sm-block"></div> --}}
-
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <ul class="nav navbar-nav flex-nowrap ml-auto">
+                        <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown ">
-                            {{-- <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="img-profile rounded-circle" src="assets/img/user1.jpg"> --}}
+                        <li class="nav-item dropdown" role="presentation">
                             <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                {{-- <img class="img-profile rounded-circle" src="{{ $siswa->name[0] }}"
-                                    style="height: 2rem; width: 2rem; border-radius: 50% !important;"> --}}
                                 @if (Auth::user()->image)
                                     <figure class="img-profile rounded-circle avatar font-weight-bold"
                                         style="background-image: url(data:image/png;base64,{{ base64_encode(Auth::user()->image) }});
@@ -219,9 +207,11 @@
                     @yield('dashboard')
                     @yield('siswabimbingan')
                     @yield('jurnaldata')
+                    @yield('monitoring')
                     @yield('penarikan')
                     @yield('pengumpulanlaporan')
                     @yield('nilailaporan')
+
 
 
                 </div>

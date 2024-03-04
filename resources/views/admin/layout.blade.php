@@ -5,7 +5,7 @@
     <!-- Custom fonts for this template -->
     <link rel="icon" href="{{ asset('assets/img/logosmk.png') }}" type="image/x-icon">
     <title>Admin Prakerin</title>
-    <link href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -55,7 +55,7 @@
             <div class="sidebar" id="sidebar">
                 <a class="sidebar-brand" href="{{ route('admin.dashboard') }}">
                     <div class="sidebar-brand-icon" style="justify-content: center; display: flex;">
-                        <img src="{{ url('assets/img/logosmk.png') }}" id="sidebarBrandIcon" style="width: 90px;"
+                        <img src="{{ url('assets/img/logosmk.png') }}" id="sidebarBrandIcon" style="width: 50%;"
                             alt="Logo" />
                     </div>
                     <div class="sidebar-brand-text" id="sidebarBrandText">SMKN 1 Adiwerna</div>
@@ -73,13 +73,6 @@
                     <span>Dashboard</span></a>
             </li>
 
-            {{-- <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div> --}}
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -122,26 +115,33 @@
             <div class="sidebar-heading">
                 Addons
             </div> --}}
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('admin.informasiprakerin') }}">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Informasi Prakerin</span>
-                </a>
-                {{-- <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div> --}}
-            </li>
+            @if (Auth::user()->jurusan === null)
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ route('admin.kegiatanprakerin') }}">
+                        <i class="fa-solid fa-person-circle-exclamation"></i>
+                        <span>Kegiatan Prakerin</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ route('admin.informasiprakerin') }}">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Informasi Prakerin</span>
+                    </a>
+                    {{-- <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Login Screens:</h6>
+                            <a class="collapse-item" href="login.html">Login</a>
+                            <a class="collapse-item" href="register.html">Register</a>
+                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                            <div class="collapse-divider"></div>
+                            <h6 class="collapse-header">Other Pages:</h6>
+                            <a class="collapse-item" href="404.html">404 Page</a>
+                            <a class="collapse-item" href="blank.html">Blank Page</a>
+                        </div>
+                    </div> --}}
+                </li>
+            @endif
 
             {{-- <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -176,32 +176,13 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                    </form>
-
-                    {{-- <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> --}}
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <ul class="nav navbar-nav flex-nowrap ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown" role="presentation">
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown ">
@@ -242,10 +223,13 @@
                     @yield('datatempatprakerin')
                     @yield('datapembagianbimbingan')
                     @yield('trashbimbingan')
+                    @yield('kegiatanprakerin')
+                    @yield('editkegiatanprakerin')
+                    @yield('trashkegiatanprakerin')
                     @yield('informasiprakerin')
                     @yield('editinfoprak')
                     @yield('trashinfoprak')
-                    
+
 
                 </div>
                 <!-- /.container-fluid -->

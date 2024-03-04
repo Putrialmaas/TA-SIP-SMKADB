@@ -16,6 +16,7 @@
             /* Biarkan lebar menyesuaikan isi notifikasi */
             top: 11vh;
             right: 7vh;
+            z-index: 1050;
         }
 
         .success-floating {
@@ -89,7 +90,7 @@
                 nisInput.value = " ";
                 nameInput.value = " ";
                 jurusanInput.selectedIndex = 0;
-                kelasInput.value = " ";
+                kelasInput.selectedIndex = 0;
                 telpInput.value = " ";
                 emailInput.value = " ";
                 statusInput.selectedIndex = 0;
@@ -181,6 +182,51 @@
         });
     </script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var jurusanInput = document.getElementById("jurusan");
+            var kelasInput = document.getElementById("kelas");
+
+            // Mendefinisikan daftar kelas untuk setiap jurusan
+            var kelasMapping = {
+                'DPIB': ['DPIB 1', 'DPIB 2', 'DPIB 3', 'DPIB 4'],
+                'TE': ['TE 1', 'TE 2', 'TE 3', 'TE 4'],
+                'TJKT': ['TJKT 1', 'TJKT 2', 'TJKT 3', 'TJKT 4'],
+                'TK': ['TK 1', 'TK 2', 'TK 3', 'TK 4'],
+                'TM': ['TM 1', 'TM 2', 'TM 3', 'TM 4'],
+                'TKRO': ['TKRO 1', 'TKRO 2', 'TKRO 3', 'TKRO 4'],
+                'TPFL': ['TPFL 1', 'TPFL 2', 'TPFL 3', 'TPFL 4'],
+                // ... dan seterusnya, sesuai dengan jurusan yang tersedia
+            };
+
+            // Fungsi untuk mengisi opsi kelas berdasarkan jurusan yang dipilih
+            function updateKelasOptions() {
+                var selectedJurusan = jurusanInput.value;
+                var kelasOptions = kelasMapping[selectedJurusan] || [];
+
+                // Hapus opsi lama
+                kelasInput.innerHTML = '<option value="" selected disabled>Pilih Kelas</option>';
+
+                // Tambahkan opsi baru
+                kelasOptions.forEach(function(kelas) {
+                    var option = document.createElement("option");
+                    option.value = kelas;
+                    option.text = kelas;
+                    kelasInput.add(option);
+                });
+            }
+
+            // Tambahkan event listener ke input jurusan
+            jurusanInput.addEventListener("change", function() {
+                updateKelasOptions();
+            });
+
+            // Panggil fungsi untuk inisialisasi opsi kelas
+            updateKelasOptions();
+        });
+    </script>
+
+
 
 
     <body>
@@ -189,11 +235,11 @@
             <i class="fas fa-plus mr-2 ml-1"></i>
             Tambah Data
         </button>
-        <button type="button" class="btn btn-primary mt-2 mb-4 ml-2" data-toggle="modal" data-target="#modalTambahFileSiswa">
+        <button type="button" class="btn btn-primary mt-2 mb-4" data-toggle="modal" data-target="#modalTambahFileSiswa">
             <i class="fas fa-plus mr-2 ml-1"></i>
             Unggah File
         </button>
-        <a href="{{ route('admin.trashsiswaview') }}"><button type="button" class="btn mt-2 mb-4 ml-2"
+        <a href="{{ route('admin.trashsiswaview') }}"><button type="button" class="btn mt-2 mb-4"
                 style="background-color: #fe5a48; color: #ffffff; font-size: 16px;">
                 <i class="fas fa-trash mr-2 ml-1"></i>
                 Trash</button></a>
@@ -215,8 +261,8 @@
                     <div class="modal-header">
                         <p class="modal-title" id="staticBackdropLabel"
                             style="color: #000000; font-size: 20px; font-weight: 700;">Form Tambah Data Siswa</p>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <form method="POST" action="{{ route('admin.tambahdatasiswa') }}">
@@ -246,8 +292,12 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" style="color: #000000;">Kelas</label>
-                                <input type="text" class="form-control" name="kelas" id="kelas" required>
+                                <select class="form-control" name="kelas" id="kelas" required>
+                                    <option value="" selected disabled>Pilih Kelas</option>
+                                    <!-- Opsi kelas akan diisi menggunakan JavaScript -->
+                                </select>
                             </div>
+
                             <div class="mb-3" style="color: #000000;">
                                 <label class="form-label">No. Telp</label>
                                 <input type="text" class="form-control" name="telp" id="telp" required>
@@ -257,7 +307,7 @@
                                 <input type="text" class="form-control" name="email" id="email" required>
                             </div>
                             <div class="mb-3" style="color: #000000;">
-                                <label class="form-label">Status</label>
+                                <label class="form-label">Status Prakerin</label>
                                 <input class="form-control" name="status" id="status" type="text"
                                     value="Belum Mendaftar" readonly>
                             </div>
@@ -287,8 +337,8 @@
                     <div class="modal-header">
                         <p class="modal-title" id="staticBackdropLabel"
                             style="color: #000000; font-size: 20px; font-weight: 700;">Tambah File Data Siswa</p>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -333,7 +383,8 @@
                                 <th>Kelas</th>
                                 <th>No. Telp</th>
                                 <th>Email</th>
-                                <th>Status</th>
+                                <th>Status Prakerin</th>
+                                <th>Nilai</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -354,6 +405,7 @@
                                     <td style="width: 150px;"><?= $data['telp'] ?></td>
                                     <td style="width: 180px;"><?= $data['email'] ?></td>
                                     <td style="width: 140px;"><?= $data['status'] ?></td>
+                                    <td><?= $data['nilai'] ?></td>
                                     <td style="width: 90px;">
                                         <div class="editdata">
                                             <button id="edit" type="button" class="btn edit-button">
@@ -445,7 +497,7 @@
         $('#dataTable').DataTable({
             "columnDefs": [{
                 "orderable": false,
-                "targets": [0, 8]
+                "targets": [0, 9]
             }]
         });
     </script>

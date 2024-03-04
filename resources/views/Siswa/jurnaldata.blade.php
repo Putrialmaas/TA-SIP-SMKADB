@@ -80,7 +80,7 @@
 
 
     <link href="{{ asset('assets/css/siswa/jurnal.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet"> --}}
 
     <style>
         /* Ganti warna teks placeholder menjadi merah (contoh) */
@@ -160,15 +160,23 @@
                                 <td><?= $data['deskripsi'] ?></td>
                                 <td style="width: 90px;">
                                     <div class="editdata">
-                                        <button id="edit" type="button" class="btn edit-button">
-                                            <a href="{{ route('siswa.jurnaldataeditview', $data->id) }}"><i
-                                                    class="far fa-edit" style="color: #000000"></i></a>
-                                        </button>
-                                        <button id="delete" type="button" class="btn delete-button"
-                                            style="color: #000000" data-toggle="modal"
-                                            data-target="#modalHapus{{ $data->id }}">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
+                                        @if ($siswa->status !== 'Selesai Prakerin')
+                                            <button id="edit" type="button" class="btn edit-button">
+                                                <a href="{{ route('siswa.jurnaldataeditview', $data->id) }}"><i
+                                                        class="far fa-edit" style="color: #000000"></i></a>
+                                            </button>
+                                            <button id="delete" type="button" class="btn delete-button" style="color: #000000"
+                                                data-toggle="modal" data-target="#modalHapus{{ $data->id }}">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        @else
+                                            <button id="edit" type="button" class="btn edit-button" disabled style="border-color: transparent !important;">
+                                                <i class="far fa-edit" style="color: #ccc;"></i>
+                                            </button>
+                                            <button id="delete" type="button" class="btn delete-button" disabled style="border-color: transparent !important;">
+                                                <i class="far fa-trash-alt" style="color: #ccc;"></i>
+                                            </button>
+                                        @endif
 
                                         <div class="modal fade" id="modalHapus{{ $data->id }}" role="dialog"
                                             tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

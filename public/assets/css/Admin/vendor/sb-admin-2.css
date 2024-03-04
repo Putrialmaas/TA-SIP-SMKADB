@@ -91,7 +91,16 @@ body {
     outline: 0 !important;
 }
 
-
+@media (min-width: 768px) {
+    .sidebar .sidebar-brand .sidebar-brand-text {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        display: flex;
+        padding-top: 16px;
+        /* font-size: 10px; */
+    }
+}
 
 .Judul {
     font-family: Poppins;
@@ -100,6 +109,17 @@ body {
     font-weight: 900;
     line-height: normal;
     color: #000000;
+}
+
+@media (max-width: 768px) {
+    .Judul {
+        font-family: Poppins;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        color: #000000;
+    }
 }
 
 .sub-judul {
@@ -161,7 +181,6 @@ body {
     border-radius: 50%;
     margin: 0 auto; /* Mengatur ke tengah secara horizontal */
 }
-
 hr {
     box-sizing: content-box;
     height: 0;
@@ -1670,7 +1689,7 @@ pre code {
 .table {
     width: 100%;
     margin-bottom: 1rem;
-    color: #858796;
+    color: #000000;
 }
 
 .table th,
@@ -4957,6 +4976,7 @@ input[type="button"].btn-block {
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1.25rem;
+    color: #000000;
 }
 
 .card-title {
@@ -6038,7 +6058,7 @@ a.badge-dark.focus {
     line-height: 1;
     color: #000;
     text-shadow: 0 1px 0 #fff;
-    opacity: 0.5;
+    opacity: .5;
 }
 
 .close:hover {
@@ -6048,7 +6068,7 @@ a.badge-dark.focus {
 
 .close:not(:disabled):not(.disabled):hover,
 .close:not(:disabled):not(.disabled):focus {
-    opacity: 0.75;
+    opacity: .75;
 }
 
 button.close {
@@ -10899,6 +10919,7 @@ a:focus {
     min-width: 10rem;
     font-size: 0.85rem;
     margin: 0 0 1rem 0;
+    background-color: #102691;
 }
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-header,
@@ -10925,7 +10946,7 @@ a:focus {
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:hover,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover {
-    background-color: #102691;
+    background-color: #224abe;
 }
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:active,
@@ -10937,6 +10958,7 @@ a:focus {
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
     color: #ffffff;
     font-weight: 700;
+    /* background-color: #2a356c; */
 }
 
 .sidebar #sidebarToggle {
@@ -10999,6 +11021,7 @@ a:focus {
     text-align: center;
     display: flex;
     padding-top: 16px;
+    font-size: 14px;
 }
 
 .sidebar hr.sidebar-divider {

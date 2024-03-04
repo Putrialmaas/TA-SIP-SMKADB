@@ -10,6 +10,7 @@
             /* Biarkan lebar menyesuaikan isi notifikasi */
             top: 11vh;
             right: 7vh;
+            z-index: 1050;
         }
 
         .success-floating {
@@ -106,7 +107,7 @@
                 if (initialImage) {
                     imagePreview.src = "data:image/jpeg;base64," + initialImage;
                 } else {
-                    imagePreview.src = "{{ asset('storage/images/no_image.jpg') }}";
+                    imagePreview.src = "{{ asset('assets/img/no_image.jpg') }}";
                 }
 
                 // Reset nilai data-initial pada gambar preview
@@ -116,7 +117,7 @@
     </script>
 
     <body>
-        <div class="Judul mb-4">
+        <div class="Judul">
             <a href="{{ route('admin.informasiprakerin') }}"><i style="padding-right: 2vh; color: #000000"
                     class="fas fa-chevron-left"></i></a>
             Edit Informasi Prakerin
@@ -131,7 +132,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="card shadow" style="margin-top: 4vh">
+        <div class="card shadow my-2">
             <div class="card-header py-3">
                 <p class="sub-judul m-0">
                     Edit Data
@@ -141,8 +142,8 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div class="card-body mt-3 mb-3">
-                    <div class="row mr-4 ml-4">
-                        <div class="col-6" style="padding-right: 100px">
+                    <div class="row mx-4">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">Nama Perusahan</label>
                                 <input type="text" class="form-control" name="nama_perusahaan" id="nama_perusahaan"
@@ -154,7 +155,7 @@
                                 </label>
                                 <input type="file" class="form-control visually-hidden" name="image" id="image"
                                     accept=".png, .jpg, .jpeg">
-                                <div class="col-3" style="display:flex;">
+                                <div class="col-12 col-md-12 col-lg-3" style="display:flex;">
                                     <div style="height: 140px; max-width: 100%; overflow: hidden; position: relative;">
                                         <div id="image-preview"
                                             style="width: 100%; height: 100%; background-color: #ddd; display: flex; justify-content: center; align-items: center; color: #000; font-size: 24px; border-radius: 8px;">
@@ -163,8 +164,7 @@
                                                     src="data:image/jpeg;base64,{{ $informasiTempatPrakerin->image }}"
                                                     style="width: 100%; height: 100%; object-fit: cover;" alt="...">
                                             @else
-                                                <img id="image-preview-img"
-                                                    src="{{ asset('storage/images/no_image.jpg') }}"
+                                                <img id="image-preview-img" src="{{ asset('assets/img/no_image.jpg') }}"
                                                     style="width: 100%; height: 100%; object-fit: cover;" alt="No Image">
                                             @endif
                                         </div>
@@ -192,7 +192,7 @@
                             </div>
 
                         </div>
-                        <div class="col-6" style="padding-left:100px">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label">Persyaratan</label>
                                 <textarea name="persyaratan" id="persyaratan" class="border rounded-0 form-control summernote">{{ $informasiTempatPrakerin->persyaratan }}</textarea>

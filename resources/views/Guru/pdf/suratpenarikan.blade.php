@@ -54,9 +54,9 @@
             <tr>
                 <td width="15">Nomor</td>
                 <td width="10"> :</td>
-                <td width="203"> ...... /...... / ...... </td>
+                <td width="203"> 423.4 /..... / 2024 </td>
                 <td rowspan="5" width="30"></td>
-                <td>Adiwerna,  <?php echo date('d') . ' ' . App\Helpers\MyHelpers::getIndonesianMonth(date('F')) . date(' Y'); ?></td>
+                <td>Adiwerna, ...........................................</td>
                 <td rowspan="5" width="20"></td>
             </tr>
             <tr>

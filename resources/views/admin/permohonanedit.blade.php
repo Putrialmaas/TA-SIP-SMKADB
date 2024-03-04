@@ -14,6 +14,7 @@
             /* Biarkan lebar menyesuaikan isi notifikasi */
             top: 11vh;
             right: 7vh;
+            z-index: 1050;
         }
     </style>
     <script>
@@ -79,8 +80,9 @@
                         var durasi = durasiSelect.value;
                         if (durasi) {
                             var tanggalMulai = selectedDates[0];
-                            var tanggalSelesai = new Date(tanggalMulai);
-                            tanggalSelesai.setMonth(tanggalMulai.getMonth() + parseInt(durasi));
+                            var jumlahHari = durasi * 30; // Mengonversi durasi bulan ke jumlah hari
+                            var tanggalSelesai = new Date(tanggalMulai.getTime() + jumlahHari * 24 *
+                                60 * 60 * 1000);
                             selesaiPicker.setDate(tanggalSelesai);
                         }
                     }
@@ -98,8 +100,9 @@
                 var durasi = this.value;
                 if (durasi && mulaiPicker.selectedDates.length > 0) {
                     var tanggalMulai = mulaiPicker.selectedDates[0];
-                    var tanggalSelesai = new Date(tanggalMulai);
-                    tanggalSelesai.setMonth(tanggalMulai.getMonth() + parseInt(durasi));
+                    var jumlahHari = durasi * 30; // Mengonversi durasi bulan ke jumlah hari
+                    var tanggalSelesai = new Date(tanggalMulai.getTime() + jumlahHari * 24 * 60 * 60 *
+                    1000);
                     selesaiPicker.setDate(tanggalSelesai);
                 }
             });
@@ -107,13 +110,15 @@
     </script>
 
 
+
+
     <body>
-        <div class="Judul mb-4">
+        <div class="Judul">
             <a href="{{ route('admin.permohonan') }}"><i style="padding-right: 2vh; color: #000000"
                     class="fas fa-chevron-left"></i></a>
             Edit Data Permohonan
         </div>
-        <div class="card shadow" style="margin-top: 50px">
+        <div class="card shadow my-2">
             <div class="card-header py-3">
                 <p class="sub-judul m-0">
                     Edit Data
@@ -122,7 +127,7 @@
             <form method="POST" action="{{ route('admin.permohonanedit', $dataPermohonan->id) }}">
                 @csrf
                 <div class="card-body mt-3 mb-3">
-                    <div class="row mr-4 ml-4">
+                    <div class="row mx-4">
                         @if (session('success'))
                             <div class="alert alert-success alert-floating">
                                 {{ session('success') }}
@@ -133,7 +138,7 @@
                                 {{ session('error') }}
                             </div>
                         @endif
-                        <div class="col-6" style="padding-right: 100px">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">NIS</label>
                                 <input type="text" class="form-control" name="NIS" id="NIS"
@@ -152,7 +157,7 @@
                                     readonly>
                             </div>
                         </div>
-                        <div class="col-6" style="padding-left:100px">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label">Tempat Prakerin</label>
                                 <input type="text" class="form-control" name="tempat_prakerin" id="tempat_prakerin"
@@ -178,14 +183,18 @@
                                 <select class="form-select form-control" style="font-size: 14px;" id="durasi"
                                     name="durasi">
                                     <option value="" disabled selected>- Pilih Durasi -</option>
-                                    @for ($i = 1; $i <= 6; $i++)
-                                        <option value="{{ $i }}"
-                                            @if ($dataPermohonan->durasi == $i) selected @endif>
-                                            {{ $i }} bulan
+                                    @php
+                                        $options = [1, 1.5, 2, 2.5, 3, 4, 5, 6];
+                                    @endphp
+                                    @foreach ($options as $option)
+                                        <option value="{{ $option }}"
+                                            @if ($dataPermohonan->durasi == $option) selected @endif>
+                                            {{ $option }} bulan
                                         </option>
-                                    @endfor
+                                    @endforeach
                                 </select>
                             </div>
+
                             <div class="row mb-4">
                                 <label for="date" class="form-label">Tanggal Mulai</label>
                                 <input class="form-control" id="tanggal_mulai" name="tanggal_mulai" type="text"
@@ -203,7 +212,7 @@
                                 <button type="button" class="btn" id="resetButton2"
                                     style="background-color: #EF4F4F; color: #ffffff">Reset</button>
                                 <button type="submit" class="btn"
-                                    style="background-color: #44B158; color: #ffffff; margin-left: 16px;">save
+                                    style="background-color: #44B158; color: #ffffff; margin-left: 16px;">Save
                                     Change</button>
                             </div>
                         </div>

@@ -100,6 +100,17 @@ body {
     color: #000000;
 }
 
+@media (max-width: 768px) {
+    .Judul {
+        font-family: Poppins;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        color: #000000;
+    }
+}
+
 .sub-judul {
     color: #000000;
     font-weight: 600;
@@ -10913,6 +10924,7 @@ a:focus {
     min-width: 10rem;
     font-size: 0.85rem;
     margin: 0 0 1rem 0;
+    background-color: #102691;
 }
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-header,
@@ -10939,7 +10951,7 @@ a:focus {
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:hover,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover {
-    background-color: #102691;
+    background-color: #224abe;
 }
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:active,

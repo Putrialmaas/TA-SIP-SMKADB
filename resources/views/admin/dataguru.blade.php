@@ -16,6 +16,7 @@
             /* Biarkan lebar menyesuaikan isi notifikasi */
             top: 11vh;
             right: 7vh;
+            z-index: 1050;
         }
 
         .success-floating {
@@ -186,11 +187,11 @@
             <i class="fas fa-plus mr-2 ml-1"></i>
             Tambah Data
         </button>
-        <button type="button" class="btn btn-primary mt-2 mb-4 ml-2" data-toggle="modal" data-target="#modalTambahFileGuru">
+        <button type="button" class="btn btn-primary mt-2 mb-4" data-toggle="modal" data-target="#modalTambahFileGuru">
             <i class="fas fa-plus mr-2 ml-1"></i>
             Unggah File
         </button>
-        <a href="{{ route('admin.trashguruview') }}"><button type="button" class="btn mt-2 mb-4 ml-2"
+        <a href="{{ route('admin.trashguruview') }}"><button type="button" class="btn mt-2 mb-4"
                 style="background-color: #fe5a48; color: #ffffff; font-size: 16px;">
                 <i class="fas fa-trash mr-2 ml-1"></i>
                 Trash</button></a>
@@ -212,8 +213,8 @@
                     <div class="modal-header">
                         <p class="modal-title" id="staticBackdropLabel"
                             style="color: #000000; font-size: 20px; font-weight: 700;">Form Tambah Data Guru Pembimbing</p>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <form method="POST" action="{{ route('admin.tambahdataguru') }}">
@@ -276,9 +277,9 @@
                     <div class="modal-header">
                         <p class="modal-title" id="staticBackdropLabel"
                             style="color: #000000; font-size: 20px; font-weight: 700;">Tambah File Data Guru</p>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-
-                        </button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     </div>
                     <div class="modal-body">
                         <!-- Form untuk mengunggah file Excel -->

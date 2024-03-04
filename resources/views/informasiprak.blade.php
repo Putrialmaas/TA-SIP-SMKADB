@@ -51,6 +51,45 @@
             font-size: 26px;
 
         }
+
+        @media screen and (max-width: 768px) {
+            .jumbotron {
+                padding: 8px 24px;
+                font-size: 20px;
+                height: auto;
+                min-height: 50vh;
+            }
+
+            .jumbotron .display-4 {
+                font-size: 28px;
+            }
+
+            .jumbotron .lead {
+                font-size: 12px;
+            }
+
+            .col-3 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .col-8 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .name {
+                font-size: 20px;
+                padding: 0 30px;
+            }
+
+            .keterangan {
+                font-size: 14px;
+                padding: 0 30px;
+                /* Tambahkan jarak kiri dan kanan 10px */
+                text-align: justify;
+            }
+        }
     </style>
 
     <body>
@@ -64,24 +103,27 @@
         </div>
 
         {{-- Card Kegiatan Prakerin --}}
-        @foreach($informasiTempatPrakerin as $info)
-        <div class="row" style="width: 100%">
-            <div class="col-3 mb-4" style="display:flex; justify-content:center; align-items:center">
-                <div style="width: 140px; height: 140px; overflow: hidden; position: relative; border-radius: 8px;">
-                    @if ($info->image)
-                        <img src="data:image/jpeg;base64,{{ $info->image }}" style="width: 100%; height: 100%; object-fit: cover;" alt="...">
-                    @else
-                        <img src="{{ asset('storage/images/no_image.jpg') }}" style="width: 100%; height: 100%; object-fit: cover;" alt="No Image">
-                    @endif
+        @foreach ($informasiTempatPrakerin as $info)
+            <div class="row" style="width: 100%">
+                <div class="col-3 mb-4" style="display:flex; justify-content:center; align-items:center">
+                    <div style="width: 140px; height: 140px; overflow: hidden; position: relative; border-radius: 8px;">
+                        @if ($info->image)
+                            <img src="data:image/jpeg;base64,{{ $info->image }}"
+                                style="width: 100%; height: 100%; object-fit: cover;" alt="...">
+                        @else
+                            <img src="{{ asset('assets/img/no_image.jpg') }}"
+                                style="width: 100%; height: 100%; object-fit: cover;" alt="No Image">
+                        @endif
+                    </div>
                 </div>
-            </div>            
-            <div class="col-8 mb-4">
-                <a class="name mt-2" href="{{ route('detailinfo', $info->id) }}" style="text-decoration: none; color: #000000;">{{ $info->nama_perusahaan }}</a>
-                {{-- <a class="name mt-2" href="{{ route('detailinfo') }}" style="text-decoration: none; color: #000000;">{{ $info->nama_perusahaan }}</a> --}}
-                <br>
-                <p class="keterangan mt-4">{{ $info->deskripsi }}</p>
+                <div class="col-8 mb-4">
+                    <a class="name mt-2" href="{{ route('detailinfo', $info->id) }}"
+                        style="text-decoration: none; color: #000000;">{{ $info->nama_perusahaan }}</a>
+                    {{-- <a class="name mt-2" href="{{ route('detailinfo') }}" style="text-decoration: none; color: #000000;">{{ $info->nama_perusahaan }}</a> --}}
+                    <br>
+                    <p class="keterangan mt-4">{{ Illuminate\Support\Str::limit($info->deskripsi, 100) }}</p>
+                </div>
             </div>
-        </div>
         @endforeach
 
     </body>

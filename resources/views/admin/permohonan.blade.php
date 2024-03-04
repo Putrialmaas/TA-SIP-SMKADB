@@ -10,6 +10,7 @@
             /* Biarkan lebar menyesuaikan isi notifikasi */
             top: 11vh;
             right: 7vh;
+            z-index: 1050;
         }
     </style>
 
@@ -73,24 +74,30 @@
                                     <td>{{ $data->tempat_prakerin }}</td>
                                     <td style="max-width: 200px;">
                                         <a href="{{ $data['balasan'] ?? '#' }}"
-                                            target="_blank">{{ $data['balasan'] ?? '-' }}</a>
+                                            target="_blank">{{ $data['balasan'] ?? ' ' }}</a>
                                     </td>
                                     <td><?= $data['status'] ?></td>
                                     <td style="min-width: 140px; max-width: 140px; width: 140px;">
                                         <div class="editdata">
                                             <button id="edit" type="button" class="btn edit-button"
+                                                data-toggle="tooltip" data-placement="top" data-title="Edit Data"
                                                 style="color: #000000">
                                                 <a href="{{ route('admin.permohonaneditview', $data->id) }}"><i
                                                         class="far fa-edit" style="color: #000000"></i></a>
                                             </button>
                                             <button id="cetak" type="button" class="btn edit-button"
-                                                style="color: #000000">
+                                                data-toggle="tooltip" data-placement="top"
+                                                data-title="Cetak Surat Permohonan" style="color: #000000">
                                                 <a href="{{ route('admin.suratpermohonan', $data->id) }}"><i
                                                         class="fa-solid fa-print" style="color: #000000"></i></a>
                                             </button>
                                             <button type="button" class="btn" style="color: #000000" data-toggle="modal"
-                                                data-target="#modalStatus{{ $data->id }}">
-                                                <i class="fa-solid fa-arrows-rotate"></i>
+                                                data-target="#modalStatus{{ $data->id }}" data-placement="top"
+                                                data-title="Ubah Status Permohonan" onmouseover="showTooltip(this)"
+                                                onmouseleave="hideTooltip(this)" onclick="hideTooltip(this)">
+                                                <i
+                                                    class="fa-solid
+                                                fa-arrows-rotate"></i>
                                             </button>
                                             {{-- <button type="button" class="btn" style="color: #000000" data-toggle="modal"
                                         data-target="#modalHapus{{ $data->id }}">
@@ -152,7 +159,8 @@
                                                                 Apakah Anda yakin ingin menghapus data?</p>
                                                             <div class="modalfoot mt-3 mb-3"
                                                                 style="display:flex; justify-content: center; align-items:center;">
-                                                                <button type="button" class="btn mr-2" data-dismiss="modal"
+                                                                <button type="button" class="btn mr-2"
+                                                                    data-dismiss="modal"
                                                                     style="background-color: #EF4F4F; color: #ffffff; font-size: 16px; font-family: Poppins;">Tidak</button>
                                                                 <button type="submit" class="btn ml-2"
                                                                     style="background-color: #44B158; color: #ffffff; font-size: 16px; font-family: Poppins;">Ya,
@@ -171,6 +179,31 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            // Fungsi untuk menampilkan tooltip
+            function showTooltip(element) {
+                if (!$(element).hasClass('tooltip-visible')) {
+                    $(element).tooltip('show');
+                    $(element).addClass('tooltip-visible');
+                }
+            }
+
+            // Fungsi untuk menyembunyikan tooltip
+            function hideTooltip(element) {
+                $(element).removeClass('tooltip-visible');
+            }
+
+            // Menyembunyikan tooltip saat modal tertutup
+            $('#modalStatus{{ $data->id }}').on('hidden.bs.modal', function() {
+                $('.btn').tooltip('hide');
+            });
+        </script>
+
+        <script>
+            const tooltipTriggerList = document.querySelectorAll('[data-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        </script>
     </body>
 
 @stop

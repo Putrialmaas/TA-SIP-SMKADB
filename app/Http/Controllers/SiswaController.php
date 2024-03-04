@@ -59,6 +59,8 @@ class SiswaController extends Controller
 
         $permohonan = $siswa->permohonan;
 
+        // dd($permohonan);
+
         return view('siswa.permohonan', [
             'siswa' => $siswa,
             'permohonan' => $permohonan,
@@ -74,7 +76,7 @@ class SiswaController extends Controller
             'alamatPrakerin' => 'required|string',
             'emailPrakerin' => 'required|email',
             'noTelpPrakerin' => 'required|string',
-            'durasi' => 'required|integer|min:1|max:6', // Menambahkan validasi untuk durasi
+            'durasi' => 'required|numeric|min:0.1|max:6', // Menambahkan validasi untuk durasi
         ], [
             'tempatPrakerin.required' => '*Nama Tempat Prakerin wajib diisi',
             'alamatPrakerin.required' => '*Alamat Tempat Prakerin wajib diisi',
@@ -192,25 +194,32 @@ class SiswaController extends Controller
 
     public function jurnaldataeditview($id)
     {
-        // dd($id);
         // Mendapatkan siswa yang sedang login
         $siswa = User::where('email', Auth::user()->email)->first();
         // Ambil data jurnal berdasarkan ID yang dikirimkan
         $jurnal = Jurnalharian::find($id);
-
+    
         // Lakukan pengecekan apakah data jurnal ditemukan atau tidak
         if (!$jurnal) {
             // Jika tidak ditemukan, mungkin hendak ditangani dengan redirect atau pesan kesalahan
             // Misalnya:
             return redirect()->route('siswa.jurnaldata')->with('error', 'Data jurnal tidak ditemukan');
         }
-        // dd($jurnal);
+    
+        // Validasi apakah tanggal jurnal sama dengan tanggal hari ini
+        $today = now()->format('Y-m-d');
+        if ($jurnal->tanggal != $today) {
+            // Jika tanggal jurnal tidak sama dengan tanggal hari ini, kembalikan dengan pesan error
+            return redirect()->route('siswa.jurnaldata')->with('error', 'Anda tidak dapat mengubah jurnal untuk tanggal selain hari ini');
+        }
+    
         // Kirim data jurnal ke view
         return view('siswa.jurnaldataedit', [
             'siswa' => $siswa,
             'jurnal' => $jurnal,
         ]);
     }
+    
 
     public function jurnaldataedit($id, Request $request)
     {
@@ -250,7 +259,7 @@ class SiswaController extends Controller
 
         // Mengambil data bimbingan siswa berdasarkan NIS
         $bimbinganSiswa = $siswa->bimbinganSiswa;
-        //dd($bimbinganSiswa);
+        // dd($bimbinganSiswa);
 
         return view('siswa.laporan', [
             'siswa' => $siswa,
@@ -283,8 +292,8 @@ class SiswaController extends Controller
                 // Tombol Submit: Set status menjadi 'Sudah Mengumpulkan'
                 $bimbinganSiswa->update(['status' => 'Sudah Mengumpulkan']);
             } elseif ($request->action == 'update') {
-                // Tombol Update: Set status menjadi 'Sudah Revisi'
-                $bimbinganSiswa->update(['status' => 'Sudah Revisi']);
+                // Tombol Update: Set status menjadi 'Sudah Mengumpulkan'
+                $bimbinganSiswa->update(['status' => 'Sudah Mengumpulkan']);
             }
 
             // Tambahkan pesan sukses atau sesuaikan dengan kebutuhan

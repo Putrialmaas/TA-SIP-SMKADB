@@ -10,6 +10,7 @@
             /* Biarkan lebar menyesuaikan isi notifikasi */
             top: 11vh;
             right: 7vh;
+            z-index: 1050;
         }
     </style>
     <script>
@@ -54,12 +55,12 @@
     </script>
 
     <body>
-        <div class="Judul mb-4">
+        <div class="Judul">
             <a href="{{ route('admin.dataguru') }}"><i style="padding-right: 2vh; color: #000000"
                     class="fas fa-chevron-left"></i></a>
             Edit Data Guru Pembimbing
         </div>
-        <div class="card shadow" style="margin-top: 50px">
+        <div class="card shadow my-3">
             <div class="card-header py-3">
                 <p class="sub-judul m-0">
                     Edit Data
@@ -68,7 +69,7 @@
             <form method="POST" action="{{ route('admin.dataguruedit', $guru->id) }}">
                 @csrf
                 <div class="card-body mt-3 mb-3">
-                    <div class="row mr-4 ml-4">
+                    <div class="row mx-4">
                         @if (session('success'))
                             <div class="alert alert-success alert-floating">
                                 {{ session('success') }}
@@ -79,11 +80,17 @@
                                 {{ session('error') }}
                             </div>
                         @endif
-                        <div class="col-6" style="padding-right: 100px">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">NIP</label>
-                                <input type="text" class="form-control" name="NIP" id="NIP2"
-                                    value="{{ $guru->NIP }}">
+                                @if ($bimbingan->isEmpty())
+                                    {{-- Check if guru has no data in bimbingan table --}}
+                                    <input type="text" class="form-control" name="NIP" id="NIP2"
+                                        value="{{ $guru->NIP }}">
+                                @else
+                                    <input type="text" class="form-control" name="NIP" id="NIP2"
+                                        value="{{ $guru->NIP }}" readonly>
+                                @endif
                             </div>
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">Nama
@@ -93,11 +100,11 @@
                             </div>
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">Kuota Bimbingan</label>
-                                <input type="text" class="form-control" pattern="[0-9]+" name="kuota_bimbingan" id="kuota_bimbingan2"
-                                    value="{{ $guru->kuota_bimbingan }}">
+                                <input type="text" class="form-control" pattern="[0-9]+" name="kuota_bimbingan"
+                                    id="kuota_bimbingan2" value="{{ $guru->kuota_bimbingan }}">
                             </div>
                         </div>
-                        <div class="col-6" style="padding-left:100px">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label">No. Telp</label>
                                 <input type="text" class="form-control" name="telp" id="telp2"
@@ -112,7 +119,7 @@
                                 <button type="button" class="btn" id="resetButton2"
                                     style="background-color: #EF4F4F; color: #ffffff">Reset</button>
                                 <button type="submit" class="btn"
-                                    style="background-color: #44B158; color: #ffffff; margin-left: 16px;">save
+                                    style="background-color: #44B158; color: #ffffff; margin-left: 16px;">Save
                                     Change</button>
                             </div>
                         </div>

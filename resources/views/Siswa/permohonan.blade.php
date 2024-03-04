@@ -3,11 +3,9 @@
 
     <link href="{{ asset('assets/css/siswa/permohonan.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <div class="judul">
-        <span style="color: #000000">Permohonan</span>
-        <span style="color :#44B158">Prakerin</span>
-    </div>
+
 
     <style>
         /* Ganti warna teks placeholder menjadi merah (contoh) */
@@ -69,16 +67,20 @@
         });
     </script>
 
-    <div class="container-fluid" style="padding-top: 20px; margin-bottom: 90px">
-        <form action="{{ route('submit.permohonan') }}" method="POST">
+    <div class="container" style="padding-top: 20px; padding-bottom: 50px">
+        <div class="judul mb-4">
+            <span style="color: #000000">Permohonan</span>
+            <span style="color :#44B158">Prakerin</span>
+        </div>
+        <form class="px-4 px-md-0" action="{{ route('submit.permohonan') }}" method="POST">
             @csrf
+
             <div class="row">
-                <div class="col-6" style="padding-left : 200px; padding-right: 100px">
-                    <div class="row mb-4">
-                        <div class="teks">
-                            Isilah data berikut!
-                        </div>
-                    </div>
+                <div class="row mb-3">
+                    <div class="teks">Isilah data berikut!</div>
+
+                </div>
+                <div class="col-md-12 col-lg-6 pe-lg-5">
                     <div class="row mb-4">
                         <label for="Nama" class="form-label">Nama Lengkap</label>
                         <div class="text-field">
@@ -104,7 +106,7 @@
                                         'TJKT' => 'Teknik Jaringan Komputer dan Telekomunikasi',
                                         'TK' => 'Teknik Ketenagalistrikan',
                                         'TM' => 'Teknik Mesin',
-                                        'TO' => 'Teknik Otomotif',
+                                        'TKRO' => 'Teknik Kendaraan Ringan dan Otomotif',
                                         'TPFL' => 'Teknik Pengelasan dan Fabrikasi Logam',
                                         default => '',
                                     }
@@ -121,10 +123,10 @@
                                 id="tempatPrakerin" name="tempatPrakerin"
                                 {{ $siswa->status !== 'Belum Mendaftar' && $siswa->status !== null ? 'readonly' : '' }}>
                         </div>
+                        @error('tempatPrakerin')
+                            <div style="color: red; font-size: 12px">{{ $message }}</div>
+                        @enderror
                     </div>
-                    @error('tempatPrakerin')
-                        <div style="color: red; font-size: 12px">{{ $message }}</div>
-                    @enderror
                     <div class="row mb-4">
                         <label for="Alamat" class="form-label">Alamat Tempat Prakerin</label>
                         <div class="text-field">
@@ -138,7 +140,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-6" style="padding-left: 70px; padding-top: 51px; padding-right: 200px">
+                <div class="col-md-12 col-lg-6 ps-lg-5">
                     <div class="row mb-4">
                         <label for="email" class="form-label">Email Tempat Prakerin</label>
                         <div class="text-field">
@@ -171,17 +173,21 @@
                             <select class="form-select" style="font-size: 14px;" id="durasi" name="durasi"
                                 @if ($siswa->status !== 'Belum Mendaftar') disabled @endif>
                                 <option value="" disabled selected>- Pilih Durasi -</option>
-                                @for ($i = 1; $i <= 6; $i++)
-                                    <option value="{{ $i }}" @if (old('durasi') == $i || ($siswa->status !== 'Belum Mendaftar' && $permohonan->durasi == $i)) selected @endif>
-                                        {{ $i }} bulan
+                                @php
+                                    $options = [1, 1.5, 2, 2.5, 3, 4, 5, 6];
+                                @endphp
+                                @foreach ($options as $option)
+                                    <option value="{{ $option }}" @if (old('durasi') == $option || ($siswa->status !== 'Belum Mendaftar' && $permohonan->durasi == $option)) selected @endif>
+                                        {{ $option }} bulan
                                     </option>
-                                @endfor
+                                @endforeach
                             </select>
                         </div>
                         @error('durasi')
                             <div style="color: red; font-size: 12px">{{ $message }}</div>
                         @enderror
                     </div>
+
 
 
 
@@ -194,15 +200,15 @@
                         @endif
                     </div>
         </form>
-        @if ($siswa->status !== 'Belum Mendaftar')
+        @if ($siswa->status !== 'Belum Mendaftar' && $permohonan->tanggal_mulai && $permohonan->tanggal_selesai)
             <form action="{{ route('balasan.permohonan') }}" method="POST">
                 @csrf
                 <div class="row mb-4">
                     <label for="balasanPrakerin" class="form-label">Balasan Tempat Prakerin</label>
                     <div class="text-field">
                         <input class="form-control" style="font-size: 14px;" type="text"
-                            placeholder="{{ $permohonan->balasan ?? 'Masukkan link drive' }}" id="balasanPrakerin" name="balasanPrakerin"
-                            {{ $permohonan->balasan ? 'readonly' : '' }}>
+                            placeholder="{{ $permohonan->balasan ?? 'Masukkan link drive' }}" id="balasanPrakerin"
+                            name="balasanPrakerin" {{ $permohonan->balasan ? 'readonly' : '' }}>
                     </div>
                 </div>
 
@@ -214,6 +220,7 @@
                 @endif
             </form>
         @endif
+
     </div>
     @if (session('success'))
         <div class="alert alert-success alert-floating">

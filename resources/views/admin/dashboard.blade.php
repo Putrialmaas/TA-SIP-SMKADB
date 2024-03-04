@@ -51,43 +51,39 @@
         <button class="btn btn-close" aria-label="Close" data-dismis="alert" style="margin-left: auto;"></button>
     </div> --}}
 
-    <div class="card shadow mb-4 " style="background-color: #EEF5FF">
+    <div class="card shadow mb-4 " style="background-color: #EEF5FF;">
         <div class="card-body mb-1">
-            <p style="line-height: 1"><b>SELAMAT DATANG, ADMIN PRAKERIN!</b></p>
-            <p class="mb-1" style="line-height: 1;">Anda login sebagai Admin Prakerin program keahlian Teknik Jaringan
-                Komputer dan
-                Telekomunikasi</p>
+            <p style="line-height: 1"><b>SELAMAT DATANG, {{ isset($admin->name) ? $admin->name : '' }}!</b></p>
+
+            @if ($admin->jurusan)
+                <p class="mb-1" style="line-height: 1;">Anda login sebagai {{ isset($admin->name) ? $admin->name : '' }}
+                    program keahlian {{ $jurusanmapping[$admin->jurusan] }}</p>
+            @else
+                <p class="mb-1" style="line-height: 1;">Anda login sebagai {{ isset($admin->name) ? $admin->name : '' }}</p>
+            @endif
         </div>
     </div>
+
 
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-6 col-md-6 mb-4">
-            {{-- <a href="{{ route('guru.siswabimbingan') }}" class="card-link"> --}}
-            <div class="card1 shadow">
-                <div class="card-body">
-                    {{-- <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Earnings (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+        <div class="col-xl-6 col-md-6 col-12 mb-4">
+            <a href="{{ route('admin.datasiswa') }}" class="card-link">
+                <div class="card1 shadow">
+                    <div class="card-body">
+
+                        <p class="keterangan">Jumlah Siswa</p>
+                        <div class="circle1">
+                            <p class="data">{{ $jumlahSiswa }}</p>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div> --}}
-                    <p class="keterangan">Jumlah Siswa</p>
-                    <div class="circle1">
-                        <p class="data">{{ $jumlahSiswa }}</p>
                     </div>
                 </div>
-            </div>
             </a>
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-6 col-md-6 mb-4">
+        <div class="col-xl-6 col-md-6 col-12 mb-4">
             <a href="{{ route('admin.dataguru') }}" class="card-link">
                 <div class="card2 shadow">
                     <div class="card-body">
@@ -147,7 +143,7 @@
         </div>
     </div> --}}
     <div class="row mb-3">
-        <div class="col-6">
+        <div class="col-12 col-md-12 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Status Prakerin Siswa</h6>
@@ -166,49 +162,59 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-12 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Status Permohonan Siswa</h6>
                 </div>
                 <div class="card-body">
-                    <h4 class="small font-weight-bold">Mengajukan <span class="float-right">180 Siswa</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar" role="progressbar" style="width: 20%; background-color:#83AF9B"
-                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Diterima<span class="float-right">120 Siswa</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+                    @foreach ($jumlahStatusPermohonanSiswa as $status => $jumlah)
+                        <h4 class="small font-weight-bold">{{ $status }} <span
+                                class="float-right">{{ $jumlah }} Siswa</span></h4>
+                        <div class="progress mb-4">
+                            <div class="progress-bar
+                                @if ($status === 'Mengajukan') bg-danger
+                                @elseif($status === 'Diterima') bg-warning @endif"
+                                role="progressbar" style="width: {{ ($jumlah / $jumlahSiswa) * 100 }}%"
+                                aria-valuenow="{{ ($jumlah / $jumlahSiswa) * 100 }}" aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
+
         </div>
     </div>
     @if (Auth::user()->jurusan !== null)
         <div class="row mb-3">
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12 col-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Kuota Guru</h6>
                     </div>
                     <div class="card-body">
-                        <h4 class="small font-weight-bold">Putri <span class="float-right">180 Siswa</span></h4>
-                        <div class="progress mb-4">
-                            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #2F9599"
-                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <h4 class="small font-weight-bold">Almaas <span class="float-right">120 Siswa</span></h4>
-                        <div class="progress mb-4">
-                            <div class="progress-bar" role="progressbar" style="width: 40%; background-color: #F67280"
-                                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                        @foreach ($guru as $guruItem)
+                            <h4 class="small font-weight-bold">{{ $guruItem->name }}
+                                <span class="float-right">
+                                    {{ $jumlahBimbinganGuru[$guruItem->NIP] }} / {{ $guruItem->kuota_bimbingan }} Siswa
+                                </span>
+                            </h4>
+                            <div class="progress mb-4">
+                                @php
+                                    $percentage =
+                                        ($jumlahBimbinganGuru[$guruItem->NIP] / $guruItem->kuota_bimbingan) * 100;
+                                @endphp
+                                <div class="progress-bar" role="progressbar"
+                                    style="width: {{ $percentage }}%; background-color: #2F9599"
+                                    aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     @endif
+
 
 
 @stop

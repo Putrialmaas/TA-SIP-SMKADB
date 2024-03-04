@@ -1,9 +1,13 @@
 @extends('siswa.layout')
 @section('jurnal')
 
+    <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Pastikan Anda memasukkan jQuery -->
+
     <!-- Tambahkan script Flatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
+
 
     <style>
         .alert-floating {
@@ -34,7 +38,7 @@
 
 
     <link href="{{ asset('assets/css/siswa/jurnal.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet"> --}}
 
     <style>
         /* Ganti warna teks placeholder menjadi merah (contoh) */
@@ -86,10 +90,7 @@
     </script>
 
 
-    <div class="judul">
-        <span style="color: #000000">Pengisian</span>
-        <span style="color :#44B158">Jurnal</span>
-    </div>
+    
     @if (session('success'))
         <div class="alert alert-success alert-floating">
             {{ session('success') }}
@@ -109,11 +110,15 @@
             @endforeach
         </div>
     @endif
-    <div class="container-fluid" style="padding-top: 60px; padding-bottom: 90px">
-        <form action="{{ route('submit.jurnal') }}" method="POST">
+    <div class="container" style="padding-top: 20px; padding-bottom: 50px">
+        <div class="judul mb-5">
+            <span style="color: #000000">Pengisian</span>
+            <span style="color :#44B158">Jurnal</span>
+        </div>
+        <form class="px-4 px-md-0" action="{{ route('submit.jurnal') }}" method="POST">
             @csrf
             <div class="row">
-                <div class="col-6" style="padding-left : 200px; padding-right: 100px">
+                <div class="col-md-12 col-lg-6 pe-lg-5">
                     <div class="row mb-4">
                         <label for="Nama" class="form-label">Nama Siswa</label>
                         <div class="text-field">
@@ -139,7 +144,7 @@
                                         'TJKT' => 'Teknik Jaringan Komputer dan Telekomunikasi',
                                         'TK' => 'Teknik Ketenagalistrikan',
                                         'TM' => 'Teknik Mesin',
-                                        'TO' => 'Teknik Otomotif',
+                                        'TKRO' => 'Teknik Kendaraan Ringan dan Otomotif',
                                         'TPFL' => 'Teknik Pengelasan dan Fabrikasi Logam',
                                         default => '',
                                     }
@@ -154,28 +159,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="padding-left: 70px; padding-right: 200px">
+                <div class="col-md-12 col-lg-6 ps-lg-5">
                     <div class="row mb-4">
                         <label for="date" class="form-label">Tanggal</label>
                         <div class="field">
                             <input class="form-control" id="date" name="date" type="date"
-                                style="font-size: 14px; background-color:unset;" placeholder="dd-mm-yyyy"
-                                value="{{ old('date') }}">
+                                style="font-size: 14px; background-color: unset;" placeholder="dd-mm-yyyy"
+                                value="{{ old('date') }}" {{ $siswa->status === 'Selesai Prakerin' ? 'disabled' : '' }}>
                         </div>
-
                     </div>
 
                     <div class="row mb-4">
                         <label for="deskripsi" class="form-label">Keterangan Kegiatan</label>
                         <div class="text-field">
-                            <textarea class="form-control" style="font-size: 14px;" type="text" id="deskripsi" name="deskripsi" required>{{ old('deskripsi') }}</textarea>
+                            <textarea class="form-control" style="font-size: 14px;" type="text" id="deskripsi" name="deskripsi" required
+                                {{ $siswa->status === 'Selesai Prakerin' ? 'readonly' : '' }}>{{ old('deskripsi') }}</textarea>
                         </div>
                     </div>
                     <div class="btnjurnal" style="justify-content: end; display: flex">
                         <button type="button" class="btn" id="resetButton"
-                            style="background-color: #EF4F4F; color: #ffffff">Reset</button>
+                            style="background-color: #EF4F4F; color: #ffffff"
+                            {{ $siswa->status === 'Selesai Prakerin' ? 'disabled' : '' }}>Reset</button>
                         <button type="submit" class="btn"
-                            style="background-color: #44B158; color: #ffffff; margin-left: 16px;">Submit</button>
+                            style="background-color: #44B158; color: #ffffff; margin-left: 16px;"
+                            {{ $siswa->status === 'Selesai Prakerin' ? 'disabled' : '' }}>Submit</button>
                     </div>
                     <div class="btnshowjurnal" style="justify-content: end; display: flex; margin-top: 3vh;">
                         <a href="{{ route('siswa.jurnaldata') }}"><button type="button" class="btn"

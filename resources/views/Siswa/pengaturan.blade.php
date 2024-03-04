@@ -3,13 +3,7 @@
     <link href="{{ asset('assets/css/siswa/layout.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/siswa/pengaturan.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
 
-
-    <div class="judul mb-5">
-        <span style="color: #000000">Edit</span>
-        <span style="color :#44B158">Profil</span>
-    </div>
 
     <style>
         .alert-floating {
@@ -22,7 +16,7 @@
             right: 7vh;
         }
     </style>
-    
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Temukan tombol "Reset" berdasarkan ID
@@ -41,7 +35,7 @@
             });
         });
     </script>
-    
+
 
     <!-- Script untuk Avatar Preview -->
     <script>
@@ -75,7 +69,7 @@
             document.addEventListener("click", function(event) {
                 if (event.target !== alertFloating) {
                     alertFloating.style.display =
-                    'none'; // Sembunyikan notifikasi jika diklik di luar notifikasi
+                        'none'; // Sembunyikan notifikasi jika diklik di luar notifikasi
                 }
             });
         });
@@ -83,11 +77,15 @@
 
 
 
-    <form action="{{ route('edit.profile') }}" method="POST" enctype="multipart/form-data">
+    <form class="px-4 px-md-0" action="{{ route('edit.profile') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="container-fluid" style="padding-top: 20px; margin-bottom: 90px">
+        <div class="container" style="padding-top: 20px; padding-bottom: 110px">
+            <div class="judul mb-5">
+                <span style="color: #000000">Edit</span>
+                <span style="color :#44B158">Profil</span>
+            </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-12 col-lg-4 pe-lg-5">
                     <div class="avatar-upload">
                         <div class="avatar-edit">
                             <input type="file" id="imageUpload" name="imageUpload" accept=".png, .jpg, .jpeg" />
@@ -108,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4" style="padding-right: 70px">
+                <div class="col-12 col-md-12 col-lg-4 pe-lg-5 px-4">
                     <div class="row mb-4">
                         <label for="Nama" class="form-label">Nama Lengkap</label>
                         <div class="text-field">
@@ -136,7 +134,7 @@
                                         'TJKT' => 'Teknik Jaringan Komputer dan Telekomunikasi',
                                         'TK' => 'Teknik Ketenagalistrikan',
                                         'TM' => 'Teknik Mesin',
-                                        'TO' => 'Teknik Otomotif',
+                                        'TKRO' => 'Teknik Kendaraan Ringan dan Otomotif',
                                         'TPFL' => 'Teknik Pengelasan dan Fabrikasi Logam',
                                         default => '',
                                     }
@@ -145,7 +143,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4" style="padding-right: 70px">
+                <div class="col-12 col-md-12 col-lg-4 ps-lg-5 px-4">
                     @if (session('success'))
                         <div class="alert alert-success alert-floating">
                             {{ session('success') }}

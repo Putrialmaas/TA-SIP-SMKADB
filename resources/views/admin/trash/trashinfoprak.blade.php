@@ -320,8 +320,8 @@
                     <form id="restoreForm" method="POST" action="{{ route('admin.handleSelectedInfoprak') }}">
                         @csrf
                         <input type="hidden" name="action" value="restore">
-                        @foreach($deletedinfoprak as $siswa)
-                            <input type="hidden" name="selectedIds[]" class="selected-item" value="{{ $siswa->id }}">
+                        @foreach($deletedinfoprak as $data)
+                            <input type="hidden" name="selectedIds[]" class="selected-item" value="{{ $data->id }}">
                         @endforeach
                         <button id="restoreButton" type="submit" class="btn mt-3" style="background-color: #FEC048; 
                         color: #ffffff; font-size: 16px;" disabled>Restore Item</button>
@@ -331,7 +331,7 @@
                         @csrf
                         <input type="hidden" name="action" value="delete">
                         @foreach($deletedinfoprak as $siswa)
-                            <input type="hidden" name="selectedIds[]" class="selected-item" value="{{ $siswa->id }}">
+                            <input type="hidden" name="selectedIds[]" class="selected-item" value="{{ $data->id }}">
                         @endforeach
                         <button id="deleteButton" type="submit" class="btn mt-3 ml-2" style="background-color: #EF4F4F; 
                         color: #ffffff; font-size: 16px;" disabled>Delete Item</button>

@@ -10,6 +10,7 @@
             /* Biarkan lebar menyesuaikan isi notifikasi */
             top: 11vh;
             right: 7vh;
+            z-index: 1050;
         }
     </style>
     <script>
@@ -38,13 +39,13 @@
             // Tambahkan event listener ke tombol "Reset"
             resetButton2.addEventListener("click", function() {
                 // Reset nilai semua input fields
-                nilaiInput.value = "{{ $dataBimbingan->nilai }}";
+                nilaiInput.value = "{{ $dataBimbingan['siswa']->nilai }}";
             });
         });
     </script>
 
     <body>
-        <div class="Judul mb-4">
+        <div class="Judul">
             <a href="{{ route('admin.datapembagianbimbingan') }}"><i style="padding-right: 2vh; color: #000000"
                     class="fas fa-chevron-left"></i></a>
             Edit Data Bimbingan
@@ -59,7 +60,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="card shadow" style="margin-top: 50px">
+        <div class="card shadow my-3">
             <div class="card-header py-3">
                 <p class="sub-judul m-0">
                     Edit Data
@@ -68,8 +69,8 @@
             <form method="POST" action="{{ route('admin.datapembagianbimbinganedit', $dataBimbingan->id) }}">
                 @csrf
                 <div class="card-body mt-3 mb-3">
-                    <div class="row mr-4 ml-4">
-                        <div class="col-6" style="padding-right: 100px">
+                    <div class="row mx-4">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">NIS</label>
                                 <input type="text" class="form-control" name="NIS" id="NIS"
@@ -83,7 +84,8 @@
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">Jurusan</label>
                                 <input type="text" class="form-control" name="jurusan" id="jurusan"
-                                    value="{{ isset($dataBimbingan->siswa->jurusan) ? $jurusanMapping[$dataBimbingan->siswa->jurusan] : '' }}" readonly>
+                                    value="{{ isset($dataBimbingan->siswa->jurusan) ? $jurusanMapping[$dataBimbingan->siswa->jurusan] : '' }}"
+                                    readonly>
                             </div>
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">Tempat Prakerin</label>
@@ -92,11 +94,17 @@
                             </div>
                             <div class="row mb-4">
                                 <label class="form-label" style="color: #000000;">Nilai</label>
-                                <input type="text" class="form-control" pattern="[0-9]+" name="nilai" id="nilai"
-                                    value="{{ $dataBimbingan->nilai }}">
+                                @if ($dataBimbingan->status == 'ACC')
+                                    <input type="number" class="form-control" pattern="[0-9]+" name="nilai"
+                                        id="nilai" value="{{ $dataBimbingan['siswa']->nilai }}" max="100">
+                                @else
+                                    <input type="number" class="form-control" name="nilai" id="nilai"
+                                        value="{{ $dataBimbingan['siswa']->nilai }}" readonly>
+                                @endif
                             </div>
+
                         </div>
-                        <div class="col-6" style="padding-left:100px">
+                        <div class="col-12 col-md-6 col-lg-6 px-lg-4 px-md-4">
                             <div class="row mb-4">
                                 <label class="form-label">NIP</label>
                                 <input type="text" class="form-control" name="NIP" id="NIP"
@@ -107,14 +115,12 @@
                                 <input type="text" class="form-control" name="name" id="nameguru"
                                     value="{{ $dataBimbingan->guru->name }}" readonly>
                             </div>
-                            <div class="row mb-4">
-                                <div class="btnedit" style="justify-content: end; display: flex; margin-top: 22vh">
-                                    <button type="button" class="btn" id="resetButton2"
-                                        style="background-color: #EF4F4F; color: #ffffff">Reset</button>
-                                    <button type="submit" class="btn"
-                                        style="background-color: #44B158; color: #ffffff; margin-left: 16px;">save
-                                        Change</button>
-                                </div>
+                            <div class="btnedit" style="justify-content: end; display: flex;">
+                                <button type="button" class="btn" id="resetButton2"
+                                    style="background-color: #EF4F4F; color: #ffffff">Reset</button>
+                                <button type="submit" class="btn"
+                                    style="background-color: #44B158; color: #ffffff; margin-left: 16px;">Save
+                                    Change</button>
                             </div>
                         </div>
                     </div>
